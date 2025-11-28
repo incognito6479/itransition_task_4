@@ -1,4 +1,4 @@
-import sqlite3, psycopg2, os 
+import psycopg2, os 
 from dotenv import load_dotenv
 
 
@@ -43,16 +43,28 @@ cur.execute("""
         id                  BIGINT PRIMARY KEY,
         user_id             INTEGER REFERENCES users(id),
         book_id             INTEGER REFERENCES books(id),
-        quantity            INTEGER
+        quantity            INTEGER,
         unit_price          DECIMAL(10, 2),
+        paid_price          DECIMAL(10, 2),
         timestamp           TIMESTAMP,
         shipping            TEXT,
-        data_source         VARCHAR(5)
+        data_source         VARCHAR(5),
         currency_type       VARCHAR(3)
     )
 """)
 
 cur.execute("""
     CREATE INDEX IF NOT EXISTS idx_books_data_source ON books (data_source)
+""")
+
+cur.execute("""
     CREATE INDEX IF NOT EXISTS idx_users_data_source ON users (data_source)
 """)
+
+cur.execute("""
+    CREATE INDEX IF NOT EXISTS idx_orders_data_source ON orders (data_source)
+""")
+
+cur.close()
+connection.commit()
+connection.close()
