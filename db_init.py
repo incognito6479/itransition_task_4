@@ -29,12 +29,13 @@ cur.execute("""
 
 cur.execute("""
     CREATE TABLE IF NOT EXISTS users (
-        id                  BIGINT PRIMARY KEY,
-        name                TEXT,
-        address             TEXT,
-        phone               TEXT,
-        email               TEXT,
-        data_source         VARCHAR(5) 
+        id                      BIGINT PRIMARY KEY,
+        name                    TEXT,
+        address                 TEXT,
+        phone                   TEXT,
+        email                   TEXT,
+        duplicated_user_ids     TEXT,
+        data_source             VARCHAR(5) 
     )
 """)
 
@@ -46,7 +47,7 @@ cur.execute("""
         quantity            INTEGER,
         unit_price          DECIMAL(10, 2),
         paid_price          DECIMAL(10, 2),
-        timestamp           TIMESTAMP,
+        timestamp           DATE,
         shipping            TEXT,
         data_source         VARCHAR(5),
         currency_type       VARCHAR(3)

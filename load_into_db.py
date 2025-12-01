@@ -14,6 +14,7 @@ connection_params = {
     'password': db_password,
     'port': 5432
 }
+ENGINE = create_engine(f'postgresql+psycopg2://{db_user}:{db_password}@127.0.0.1:5432/{db_name}')
 
 def checkRowCount(table_name):
     query = f'SELECT count(*) FROM {table_name}'
@@ -27,5 +28,4 @@ def checkRowCount(table_name):
 
 def loadIntoDB(df, table_name):
     if checkRowCount(table_name) == 0:
-        engine = create_engine(f'postgresql+psycopg2://{db_user}:{db_password}@127.0.0.1:5432/{db_name}')
-        df.to_sql(table_name, engine, if_exists="append", index=False)
+        df.to_sql(table_name, ENGINE, if_exists="append", index=False)
